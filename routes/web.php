@@ -12,5 +12,9 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('register');
 });
+
+Route::post('login', 'PassportController@login')->name('login');
+Route::post('register', 'PassportController@register')->name('register');
+
