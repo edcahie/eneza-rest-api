@@ -12,11 +12,11 @@ class CoursesTableSeeder extends Seeder
     public function run()
     {
         DB::table('courses')->insert([
-            'course_name' 		=> 'Pridmaire',
+            'course_name' 		=> 'Primary',
         ]);
 
         DB::table('courses')->insert([
-            'course_name' 		=> 'Secodndaire',
+            'course_name' 		=> 'Secondary',
         ]);
     }
 }
