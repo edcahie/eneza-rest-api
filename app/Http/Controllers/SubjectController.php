@@ -110,6 +110,7 @@ class SubjectController extends Controller
             ], 400);
         }
         $input = $request->all();
+    //  dd($input);
         $subject->fill($input);
         //dd($input);
         if ($subject->update())

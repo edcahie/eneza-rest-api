@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Reposostories\Course\CourseReposotory;
+use App\Reposotories\Course\EloquentCourse;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -23,6 +25,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->singleton(CourseReposotory::class, EloquentCourse::class);
     }
 }

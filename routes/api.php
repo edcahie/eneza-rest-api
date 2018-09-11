@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 |
 */
 
-//Route::resource('courses', 'CourseController');//Dont forget to decomment this fror test
+//Route::resource('courses', 'CourseController');//Dont forget to uncomment this fror test
 //Route::resource('subjects', 'SubjectController');
 //Route::resource('contents', 'ContentController');
 //Route::resource('quizzes', 'QuizzAnswerController');

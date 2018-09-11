@@ -3,48 +3,36 @@
 namespace App\Http\Controllers;
 
 use App\Course;
+use App\Reposotories\CourseReposotory;
+use App\Reposotories\EloquentCourse;
 use Illuminate\Http\Request;
 
+/**
+ * Class CourseController
+ * @package App\Http\Controllers
+ */
 class CourseController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-        $course = Course::orderBy('course_name', 'ASC')->get();
-        return response()->json([
-            'success' => true,
-            'data' => $course
-        ]);
-    }
-
+     * @var CourseReposotory
+     * */
+    private $course;
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * CourseController constructor.
      */
-    public function create()
+    public function __construct(EloquentCourse $course)
     {
-        //
+        $this->course = $course ;
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
+    public function index(){
+      return  $this->course->all();
+    }
+    public function store(Request $request){
         $this->validate($request, [
             'course_name' => 'required|unique:courses' ,
         ]);
         $input = $request->all();
-        $course = Course::create($input);
+        $course = $this->course->create($input);
         if ($course)
             return response()->json([
                 'success' => true,
@@ -55,7 +43,6 @@ class CourseController extends Controller
                 'success' => false,
                 'message' => 'Course could not be added'
             ], 500);
-
     }
 
     /**
@@ -66,8 +53,7 @@ class CourseController extends Controller
      */
     public function show($id)
     {
-        //
-        $course = Course::find($id);
+        $course = $this->course->getById($id);
 
         if (!$course) {
             return response()->json([
@@ -83,17 +69,6 @@ class CourseController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -102,7 +77,7 @@ class CourseController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $course = Course::find($id);
+        $course = $this->course->getById($id);
         if (!$course) {
             return response()->json([
                 'success' => false,
@@ -110,9 +85,10 @@ class CourseController extends Controller
             ], 400);
         }
         $input = $request->all();
-        $course->fill($input);
+        $course = $this->course->update($input, $id);
+//        $course->fill($input);
         //dd($input);
-        if ($course->update())
+        if ($course)
             return response()->json([
                 'success' => true
             ]);
@@ -123,15 +99,9 @@ class CourseController extends Controller
             ], 500);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
-        $course = Course::find($id);
+        $course = $this->course->getById($id);
 
         if (!$course) {
             return response()->json([
@@ -139,8 +109,8 @@ class CourseController extends Controller
                 'message' => 'Course with id ' . $id . ' not found'
             ], 400);
         }
-
-        if ($course->delete()) {
+        //dd($course);
+        if ($this->course->delete($id)) {
             return response()->json([
                 'success' => true
             ]);

@@ -144,6 +144,7 @@
                     <div class="row">
                         <div class="col-lg-12">
                                {{ Form::open(['route' => 'login', 'id' => 'login-form', 'style' =>"display: block;", 'autocomplete' => "off" ]) }}
+                                {!! csrf_field() !!}
                                 <div class="form-group">
                                     <input type="email" name="email" id="email" tabindex="1" class="form-control" placeholder="email" required>
                                 </div>
@@ -161,6 +162,7 @@
                                 {{ Form::close() }}
 
                                 {{ Form::open(['route' => 'register', 'id' => 'register-form' , 'style' =>"display: none;", 'autocomplete' => "off" ]) }}
+                               {!! csrf_field() !!}
                                <div class="form-group">
                                     <input type="text" name="name" id="name" tabindex="1" class="form-control" placeholder="name" required>
                                 </div>

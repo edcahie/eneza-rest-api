@@ -24,40 +24,38 @@ class CourseTest extends \PHPUnit_Framework_TestCase
     public function testPost()
     {
 
-//        $this->withoutMiddleware('auth');
+       $client = new Client(); //GuzzleHttp\Client
+       $result = $client->post('http://127.0.0.1:8000/api/courses', [
+           'form_params' => [
+               'course_name' => 'Beginner'
+            ]
+        ]) ;
+  }
+   public function testGet()
+    {
+       $client = new Client();
+       $client->request('GET', 'http://127.0.0.1:8000/api/courses/');
+    }
+    public function testDelete()
+    {
+
         $client = new Client(); //GuzzleHttp\Client
-        $result = $client->post('http://127.0.0.1:8000/api/courses', [
+        $result = $client->delete('http://127.0.0.1:8000/api/courses/8', [
             'form_params' => [
                 'course_name' => 'Beginner'
             ]
         ]) ;
     }
-//    public function testGet()
-//    {
-//        $client = new Client();
-//        $client->request('GET', 'http://127.0.0.1:8000/api/courses/');
-//    }
-//    public function testDelete()
-//    {
-//
-////        $this->withoutMiddleware('auth');
-//        $client = new Client(); //GuzzleHttp\Client
-//        $result = $client->delete('http://127.0.0.1:8000/api/courses/8', [
-//            'form_params' => [
-//                'course_name' => 'Beginner'
-//            ]
-//        ]) ;
-//    }
-//    public function testUpdate()
-//    {
-//
-////        $this->withoutMiddleware('auth');
-//        $client = new Client(); //GuzzleHttp\Client
-//        $result = $client->put('http://127.0.0.1:8000/api/courses/1', [
-//            'form_params' => [
-//                'course_name' => 'Beginner'
-//            ]
-//        ]) ;
-//    }
+    public function testUpdate()
+    {
+
+//        $this->withoutMiddleware('auth');
+        $client = new Client(); //GuzzleHttp\Client
+        $result = $client->put('http://127.0.0.1:8000/api/courses/1', [
+            'form_params' => [
+                'course_name' => 'Beginner'
+           ]
+     ]) ;
+   }
 
 }
